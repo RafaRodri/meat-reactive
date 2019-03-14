@@ -5,7 +5,7 @@ import {CartItem} from "../restaurant-detail/shopping-cart/cart-item.model";
 import {Order, OrderItem} from "./order.model";
 import {Router} from "@angular/router";
 
-import {FormGroup, FormBuilder} from "@angular/forms";
+import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'mt-order',
@@ -13,7 +13,10 @@ import {FormGroup, FormBuilder} from "@angular/forms";
 })
 export class OrderComponent implements OnInit {
 
-  orderForm = FormGroup
+  emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+  numberPatter = /^[0-9]*$/
+
+  orderForm: FormGroup
 
   delivery: number = 8
 
@@ -27,12 +30,23 @@ export class OrderComponent implements OnInit {
               private router: Router,
               private formBuilder: FormBuilder) { }
 
-  ngOnInit() {
-      this.orderForm = this.formBuilder.group(){
-          //propriedades que representam os inputs do formulário
-          
-      }
-  }
+    ngOnInit() {
+        this.orderForm = this.formBuilder.group({
+            //propriedades que representam os inputs do formulário
+
+            //utilizando a forma de criação, passando o valor do campo diretamente no objeto
+            //name: '',
+
+            //utilizando método "control" de formBuilder, que cria o component
+            name: this.formBuilder.control('', [Validators.required, Validators.minLength(2)]),
+            email: this.formBuilder.control('', [Validators.required, Validators.pattern(this.emailPattern)]),
+            emailConfirmation: this.formBuilder.control('', [Validators.required, Validators.pattern(this.emailPattern)]),
+            address:this.formBuilder.control('', [Validators.required, Validators.minLength(5)]),
+            number:this.formBuilder.control('', [Validators.required, Validators.pattern(this.numberPatter)]),
+            optionalAddress:this.formBuilder.control(''),
+            paymentOption:this.formBuilder.control('', [Validators.required])
+        })
+    }
 
   itemsValue(): number {
       return this.orderService.itemsValue()

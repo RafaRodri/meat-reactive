@@ -5,10 +5,10 @@
 <section class="content">
   <section class="invoice">
 
-    <!--{{//form.valid}}-->
-    <!--{{//form.value | json}}-->
+    {{orderForm.valid}}
+    {{orderForm.value | json}}
 
-    <form #form="ngForm" novalidate>
+    <form [formGroup]="orderForm" novalidate>
       <div class="row">
         <div class="col-xs-12">
           <h2 class="page-header">
@@ -17,28 +17,55 @@
         </div>
       </div>
 
-      <div class="row invoice-info">
+      <div class="row">
+        <div class="col-xs-12">
+          <p class="lead">Seus Dados:</p>
+        </div>
+
+        <div class="col-sm-6 col-xs-12">
+          <mt-input-container errorMessage="Campo obrigatório e com 2 caracteres" label="Nome">
+            <input class="form-control" formControlName="name" placeholder="Nome" autocomplete="off">
+          </mt-input-container>
+        </div>
+
+        <div class="col-sm-3 col-xs-6">
+          <mt-input-container errorMessage="Email inválido" label="E-mail">
+            <input class="form-control" formControlName="email" placeholder="E-mail" autocomplete="off">
+          </mt-input-container>
+        </div>
+
+        <div class="col-sm-3 col-xs-6">
+          <mt-input-container errorMessage="Email inválido" label="E-mail">
+            <input class="form-control" formControlName="emailConfirmation" placeholder="Confirmação de e-mail" autocomplete="off">
+          </mt-input-container>
+        </div>
+
+      </div>
+
+      <div class="row">
         <div class="col-xs-12">
           <p class="lead">Endereço de Entrega:</p>
         </div>
         <div class="col-sm-6 col-xs-12">
           <mt-input-container errorMessage="Campo obrigatório e com 5 caracteres" label="Endereço">
-            <input class="form-control" name="address" ngModel required minlength="5" autocomplete="off" placeholder="Endereço">
+            <input class="form-control" formControlName="address" placeholder="Endereço" autocomplete="off">
           </mt-input-container>
         </div>
+
         <div class="col-sm-3 col-xs-6">
           <mt-input-container errorMessage="Obrigatório e somente números" label="Número">
-            <input class="form-control" name="number" ngModel required pattern="^[0-9]*$" autocomplete="off" placeholder="Número">
+            <input class="form-control" formControlName="number" placeholder="Número" autocomplete="off">
           </mt-input-container>
         </div>
+
         <div class="col-sm-3 col-xs-6">
           <mt-input-container label="Complemento">
-            <input class="form-control" name="optionalAddress" ngModel autocomplete="off" placeholder="Complemento">
+            <input class="form-control" formControlName="optionalAddress" placeholder="Complemento" autocomplete="off">
           </mt-input-container>
         </div>
-        <!-- /.col -->
+
       </div>
-      <!-- /.row -->
+
 
       <!-- Table row -->
       <div class="row">
@@ -47,9 +74,9 @@
         </div>
 
         <mt-order-items [items]="cartItems()"
-        (increaseQty)="increaseQty($event)"
-        (decreaseQty)="decreaseQty($event)"
-        (remove)="remove($event)">
+                        (increaseQty)="increaseQty($event)"
+                        (decreaseQty)="decreaseQty($event)"
+                        (remove)="remove($event)">
 
         </mt-order-items>
 
@@ -63,7 +90,7 @@
           <p class="lead">Formas de Pagamento:</p>
 
           <div class="form-group">
-            <mt-radio [options]="paymentOptions" name="paymentOption" ngModel required></mt-radio>
+            <mt-radio [options]="paymentOptions" formControlName="paymentOption" ></mt-radio>
           </div>
 
         </div>
@@ -84,13 +111,12 @@
 
     <div class="row">
       <div class="col-xs-12">
-        <button (click)="checkOrder(form.value)" class="btn btn-success pull-right"
-                [disabled]="!form.valid || cartItems().length === 0">
+        <button (click)="checkOrder(orderForm.value)" class="btn btn-success pull-right"
+                [disabled]="!orderForm.valid || cartItems().length === 0">
 
-          <i class="fa fa-credit-card"></i>
-          Concluir Pedido
+                <i class="fa fa-credit-card"></i>Concluir Pedido
         </button>
-          <!--<a href="order-summary.html" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Concluir Pedido-->
+        <!--<a href="order-summary.html" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Concluir Pedido-->
         <!--</a>-->
       </div>
     </div>
