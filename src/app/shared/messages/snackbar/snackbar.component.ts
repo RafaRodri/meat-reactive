@@ -3,6 +3,8 @@ import {trigger, state, style, transition, animate} from '@angular/animations'
 import {NotificationService} from "../notification.service";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/observable/timer";
+import "rxjs/add/operator/do";
+import "rxjs/add/operator/switchMap";
 
 @Component({
   selector: 'mt-snackbar',
@@ -38,17 +40,14 @@ export class SnackbarComponent implements OnInit {
   constructor(private notificationService: NotificationService) { }
 
   ngOnInit() {
-    this.notificationService.notifier.subscribe(message => {
+    this.notificationService.notifier.do(message => {
           //pegar a mensagem
           this.message = message
 
           //mudar a visibilidade do snackbar
           this.snackVisibility = 'visible'
-
-          //tirar mensagem após alguns segundos (utilizando o operador de Observable, "timer")
-          //utilizando novamente o método subscribe, para ouvir este outro Observable
-          Observable.timer(3000).subscribe(timer => this.snackVisibility = 'hidden')
-      })
+      }).switchMap(message => Observable.timer(3000))
+        .subscribe(timer => this.snackVisibility = 'hidden')
   }
 
   // toggleSnack(){
