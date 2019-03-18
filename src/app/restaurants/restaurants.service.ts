@@ -1,61 +1,48 @@
-import { Injectable } from "@angular/core";
-import { Http } from "@angular/http"
+import {Injectable} from "@angular/core";
+import {HttpClient, HttpParams} from "@angular/common/http"
 
-import { Observable } from "rxjs/Observable";
+import {Observable} from "rxjs/Observable";
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/catch'
 
-import { Restaurant } from "./restaurant/restaurant.model";
+import {Restaurant } from "./restaurant/restaurant.model";
 
-import { MEAT_API } from "../app.api";
-import { ErrorHandler } from "../app.error-handler";
-import { MenuItem } from "../restaurant-detail/menu-item/menu-item.model";
+import {MEAT_API} from "../app.api";
+import {ErrorHandler} from "../app.error-handler";
+import {MenuItem} from "../restaurant-detail/menu-item/menu-item.model";
 
 @Injectable()
 export class RestaurantsService {
-    // rests: Restaurant[] = [
-    //     {
-    //         id: "bread-bakery",
-    //         name: "Bread & Bakery",
-    //         category: "Bakery",
-    //         deliveryEstimate: "25m",
-    //         rating: 4.9,
-    //         imagePath: "assets/img/restaurants/breadbakery.png"
-    //     },
-    //     {
-    //         id: "burger-house",
-    //         name: "Burger House",
-    //         category: "Hamburgers",
-    //         deliveryEstimate: "100m",
-    //         rating: 3.5,
-    //         imagePath: "assets/img/restaurants/burgerhouse.png"
-    //     }
-    // ]
 
-    constructor(private http: Http) {}
+    constructor(private http: HttpClient) {}
 
     restaurants(search?: string): Observable<Restaurant[]>{
-        //concaternando endereço que criamos na constant, que representa a API
-        return this.http.get(`${MEAT_API}/restaurants`,{params: {q: search}})
-            .map(response => response.json())
-            .catch(ErrorHandler.handleError)
+        //para passar parâmetros, agora é necessário ter uma váriavel do tipo
+        let params: HttpParams = undefined
+        
+        if (search){
+            //instancia objeto do tipo HttpParams
+            //o objeto HttpParams, é imutável, ou seja, sempre que setar um parâmetro, é adicionado um valor,
+                //e é criado uma cópia, retornando uma instância de HttpParams
+                //logo, o seguinte trecho não funcionaria:
+                //params = new HttpParams()
+                //params.set('q', search)
+            params = new HttpParams().append('q', search)
+            //é possível utilizar o método set() ou append(), para passar valor
+        }
+
+        return this.http.get<Restaurant[]>(`${MEAT_API}/restaurants`,{params: params})
     }
 
     restaurantById(id: string): Observable<Restaurant>{
-        return this.http.get(`${MEAT_API}/restaurants/${id}`)
-            .map(response => response.json())
-            .catch(ErrorHandler.handleError)
+        return this.http.get<Restaurant>(`${MEAT_API}/restaurants/${id}`)
     }
 
     reviewsOfRestaurant(id: string): Observable<any>{
         return this.http.get(`${MEAT_API}/restaurants/${id}/reviews`)
-            .map(response => response.json())
-            .catch(ErrorHandler.handleError)
     }
 
     menuOfRestaurant(id: string): Observable<MenuItem[]>{
-        return this.http.get(`${MEAT_API}/restaurants/${id}/menu`)
-            .map(response => response.json())
-            .catch(ErrorHandler.handleError)
+        return this.http.get<MenuItem[]>(`${MEAT_API}/restaurants/${id}/menu`)
     }
 }

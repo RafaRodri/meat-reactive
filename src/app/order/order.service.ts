@@ -3,14 +3,14 @@ import {ShoppingCartService} from "../restaurant-detail/shopping-cart/shopping-c
 import {CartItem} from "../restaurant-detail/shopping-cart/cart-item.model";
 import {Order, OrderItem} from "./order.model";
 import {Observable} from "rxjs/Observable";
-import {Headers, Http, RequestOptions} from "@angular/http";
+import {HttpClient} from "@angular/common/http";
 import {MEAT_API} from "../app.api";
 
 @Injectable()
 export class OrderService {
 
     // Criar acesso ao "ShoppingCartService"
-    constructor(private cartService: ShoppingCartService, private http: Http){}
+    constructor(private cartService: ShoppingCartService, private http: HttpClient){}
 
     // Método para repassar valor dos items para o "CartService"
     itemsValue(): number {
@@ -45,14 +45,11 @@ export class OrderService {
 
     //Servidor vai retornar id para a compra realizada
     checkOrder(order: Order): Observable<string>{
-        const headers = new Headers()
-
+        //const headers = new Headers()
         //informar nome e valor do header
-        headers.append('Content-type', 'application/json')
+        //headers.append('Content-type', 'application/json')
 
-        //chamar método post, informando: URL, Objeto que vai ser enviado e headers
-        return this.http.post(`${MEAT_API}/orders`, JSON.stringify(order), new RequestOptions({headers: headers}))
-            .map(response => response.json())
+        return this.http.post<Order>(`${MEAT_API}/orders`, order)
             .map(order => order.id)
     }
 
