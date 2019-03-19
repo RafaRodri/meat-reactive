@@ -1,0 +1,8 @@
+{
+  //indicar para IDE compilar o arquivo de .ts para .js, assim que o .ts for salvo
+  "compileOnSave": true,
+  //indicar qual o diretório de saída para o .js compilado
+  "compilerOptions": {
+    "outDir": "dist"
+  }
+}
