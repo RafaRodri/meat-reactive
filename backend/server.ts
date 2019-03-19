@@ -8,6 +8,7 @@ import * as fs from 'fs'
 import * as https from 'https'
 
 import {handleAuthentication} from "./auth";
+import {handleAuthorization} from "./authz";
 
 
 // Tipar constante "server" com objeto "express", assim fica possível fazer autocomplete dos métodos disponíveis em uma
@@ -24,6 +25,7 @@ server.use(jsonServer.bodyParser)
 
 // middleware para login
 server.post('/login', handleAuthentication)
+server.use('/orders', handleAuthorization)
 
 server.use(router)
 

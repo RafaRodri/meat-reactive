@@ -12,6 +12,6 @@ export class User {
 
 
 //lista de usuários em memória (indexado pelo email)
-export const users = {
+export const users: {[key: string]: User} = {
     "rafael@teste.com": new User('rafael@teste.com', 'Rafael', '123')
 }

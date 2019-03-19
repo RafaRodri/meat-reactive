@@ -5,6 +5,7 @@ var jsonServer = require("json-server");
 var fs = require("fs");
 var https = require("https");
 var auth_1 = require("./auth");
+var authz_1 = require("./authz");
 // Tipar constante "server" com objeto "express", assim fica possível fazer autocomplete dos métodos disponíveis em uma
 // aplicação express e tratar melhor os erros
 var server = jsonServer.create();
@@ -14,6 +15,7 @@ server.use(middlewares);
 server.use(jsonServer.bodyParser);
 // middleware para login
 server.post('/login', auth_1.handleAuthentication);
+server.use('/orders', authz_1.handleAuthorization);
 server.use(router);
 var options = {
     cert: fs.readFileSync('./backend/keys/cert.pem'),

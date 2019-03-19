@@ -3,6 +3,7 @@ import {Request, Response} from 'express'
 import {User,  users} from "./users";
 
 import * as jwt from 'jsonwebtoken'
+import {apiConfig} from "./api-config";
 
 
 // Processar o 'post' que foi feito para o login
@@ -12,7 +13,7 @@ export const handleAuthentication = (req: Request, resp: Response) => {
     const user: User = req.body
 
     if(isValid(user)){
-        const dbUser: User = users[user.email]
+        const dbUser = users[user.email]
 
         //primeiro parametro é o token (o que quer dentro do corpo), as "claims"
         //segundo parametro é o password, necessário para assinar o token (criando a terceira parte)
@@ -20,7 +21,7 @@ export const handleAuthentication = (req: Request, resp: Response) => {
             // uma segurança a mais, pois não vai conseguir criar um token assinado, utilizando este password
             // a aplicação angular vai precisar apenas, mandar o token de volta, sem precisar colocar nenhuma
             // informação dentro do token, que ela precise gerar um token assinado para poder verificar aqui
-        const token = jwt.sign({sub: dbUser.email, iss: 'meat-api'}, 'meat-api-password')
+        const token = jwt.sign({sub: dbUser.email, iss: 'meat-api'}, apiConfig.secret)
 
         resp.json({name: dbUser.name, email: dbUser.email, accesToken: token})
     }else{
