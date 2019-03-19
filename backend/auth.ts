@@ -23,7 +23,7 @@ export const handleAuthentication = (req: Request, resp: Response) => {
             // informação dentro do token, que ela precise gerar um token assinado para poder verificar aqui
         const token = jwt.sign({sub: dbUser.email, iss: 'meat-api'}, apiConfig.secret)
 
-        resp.json({name: dbUser.name, email: dbUser.email, accesToken: token})
+        resp.json({name: dbUser.name, email: dbUser.email, accessToken: token})
     }else{
         // Negar acesso
         resp.status(403).json({message: 'Dados inválidos.'})

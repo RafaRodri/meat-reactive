@@ -16,7 +16,7 @@ exports.handleAuthentication = function (req, resp) {
         // a aplicação angular vai precisar apenas, mandar o token de volta, sem precisar colocar nenhuma
         // informação dentro do token, que ela precise gerar um token assinado para poder verificar aqui
         var token = jwt.sign({ sub: dbUser.email, iss: 'meat-api' }, api_config_1.apiConfig.secret);
-        resp.json({ name: dbUser.name, email: dbUser.email, accesToken: token });
+        resp.json({ name: dbUser.name, email: dbUser.email, accessToken: token });
     }
     else {
         // Negar acesso
