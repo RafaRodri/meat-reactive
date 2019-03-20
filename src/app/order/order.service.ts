@@ -5,15 +5,13 @@ import {Order, OrderItem} from "./order.model";
 import {Observable} from "rxjs/Observable";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {MEAT_API} from "../app.api";
-import {LoginService} from "../security/login/login.service";
 
 @Injectable()
 export class OrderService {
 
     // Criar acesso ao "ShoppingCartService"
     constructor(private cartService: ShoppingCartService,
-                private http: HttpClient,
-                private loginService: LoginService){}
+                private http: HttpClient){}
 
     // Método para repassar valor dos items para o "CartService"
     itemsValue(): number {
@@ -52,12 +50,12 @@ export class OrderService {
         //informar nome e valor do header
         //headers.append('Content-type', 'application/json')
 
-        let headers = new HttpHeaders() //objeto imutável q faz parte do novo módulo HttpClient
-        if (this.loginService.isLoggedIn()) {
-            headers = headers.set('Authorization', `Bearer ${this.loginService.user.accessToken}`)
-        }
+        // let headers = new HttpHeaders() //objeto imutável q faz parte do novo módulo HttpClient
+        // if (this.loginService.isLoggedIn()) {
+        //     headers = headers.set('Authorization', `Bearer ${this.loginService.user.accessToken}`)
+        // }
 
-        return this.http.post<Order>(`${MEAT_API}/orders`, order, {headers: headers})
+        return this.http.post<Order>(`${MEAT_API}/orders`, order)
             .map(order => order.id)
     }
 
