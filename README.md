@@ -1,6 +1,21 @@
 # Meat - Angular App Starter
 
-## 1. Passos para começar
+## 1. Conteúdo do curso:
+<li>Criar uma aplicação usando recursos do Angular como Componentes, Diretivas e Pipes
+<li>Consumir Web Services REST usando os serviços Http e HttpClient
+<li>Usar eventos para Comunicação entre Componentes
+<li>Usar HttpInterceptors para Enviar Headers de Autorização automaticamente
+<li>Usar Route Guards para Proteger Componentes na Aplicação
+<li>Criar Formulários com Template Forms e Reactive Forms
+<li>Usar Validadores Padrões e Personalizados para Formulários
+<li>Criar Módulos e Carregá-los de Forma Tardia (Lazy-Loading)
+<li>Usar Operadores de RxJS para Implementar Buscas Sofisticadas de Forma Simples
+<li>Realizar Autenticação Simples em uma Aplicação Angular
+<li>RxJS 6 e o novo operador "pipe" (Angular 6)
+<li>Criar Componentes com Angular Elements (Angular 6)
+   
+
+## 2. Passos para começar
 
 ### Clonando o Repositório
 
@@ -14,13 +29,17 @@
 
 `ng serve` ou `npm start`
 
-## 2. Iniciando o Backend
+## 3. Iniciando o Backend
 
 ### Instalando o json-server
 
 `npm install -g json-server`
 
-### Iniciando o serviço (raiz da aplicação)
+### Iniciando o serviço (Porta 3001, usando HTTPS)
+
+`node backend/dist/server`
+
+##### *_Caso queira iniciar o serviço na raiz da aplicação_
 
 `json-server db.json`
 
