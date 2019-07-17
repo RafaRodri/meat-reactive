@@ -14,6 +14,16 @@
 <li>RxJS 6 e o novo operador "pipe" (Angular 6)
 <li>Criar Componentes com Angular Elements (Angular 6)
    
+### Fotos do projeto:
+
+<img src="src/assets/img/prints/1-login.png">
+<img src="src/assets/img/prints/2-logado.png">
+<img src="src/assets/img/prints/3-restaurants.png">
+<img src="src/assets/img/prints/4-restaurant.png">
+<img src="src/assets/img/prints/4-restaurant.about.png">
+<img src="src/assets/img/prints/5-order-1.png">
+<img src="src/assets/img/prints/5-order-2.png">
+
 
 ## 2. Passos para começar
 
