@@ -3,6 +3,7 @@ import {ShoppingCartService} from "../restaurant-detail/shopping-cart/shopping-c
 import {CartItem} from "../restaurant-detail/shopping-cart/cart-item.model";
 import {Order, OrderItem} from "./order.model";
 import {Observable} from "rxjs/Observable";
+//import {Http, Headers, RequestOptions} from "@angular/http";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {MEAT_API} from "../app.api";
 
@@ -49,6 +50,9 @@ export class OrderService {
         //const headers = new Headers()
         //informar nome e valor do header
         //headers.append('Content-type', 'application/json')
+
+        //return this.http.post(`${MEAT_API}/orders`, JSON.stringify(order), new RequestOptions({headers: headers}))
+        //    .map(response => response.json())
 
         // let headers = new HttpHeaders() //objeto imutável q faz parte do novo módulo HttpClient
         // if (this.loginService.isLoggedIn()) {

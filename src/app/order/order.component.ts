@@ -90,6 +90,7 @@ export class OrderComponent implements OnInit {
   }
 
   checkOrder(order: Order){
+      //transformando array de CartItem para um de OrderItem e atribuindo no objeto de compra
       order.orderItems = this.cartItems()
           .map((item:CartItem) => new OrderItem(item.quantity, item.menuItem.id))
 

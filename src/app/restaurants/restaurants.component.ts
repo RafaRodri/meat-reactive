@@ -39,7 +39,6 @@ export class RestaurantsComponent implements OnInit {
               private fb: FormBuilder) {}
 
   ngOnInit() {
-
     //instanciar o "searchControl" fora, pois precisa de uma referência
     this.searchControl = this.fb.control('')
     //passando um objeto com uma série de propriedades
