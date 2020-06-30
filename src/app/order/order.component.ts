@@ -86,6 +86,7 @@ export class OrderComponent implements OnInit {
   }
 
   isOrderCompleted(): boolean{
+      // se existir o orderId (que é atribuido após a confirmação da compra), a compra já foi realizada
       return this.orderId !== undefined
   }
 

@@ -15,8 +15,13 @@ export class LoginService {
     lastUrl: string
 
     constructor(private http: HttpClient, private router: Router){
-        this.router.events.filter(e => e instanceof NavigationEnd)
-                            .subscribe((e: NavigationEnd) => this.lastUrl = e.url)
+        this.router.events  // OBSERVABLE do router que fica NOTIFICANDO sobre as mudanças (urls) de navegação do usuário
+                            // (atual, que acabou de ativar, anterior e assim por diante)
+                        .filter(e => e instanceof NavigationEnd)    // filtrar para pegar apenas a última rota
+                        .subscribe((e: NavigationEnd) => 
+                            this.lastUrl = e.url    // mandar a url atual (filtrada acima) quando alguém chamar o "handlerLogin()" e não passar
+                                                    // nenhuma url, para assim retornar para a página navegada antes de ir para a tela de login
+                        )
     }
 
     isLoggedIn(): boolean{

@@ -46,12 +46,14 @@ import { AplicationErrorHandler } from "./app.error-handler";
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    SharedModule.forRoot(),
-    RouterModule.forRoot(ROUTES, { preloadingStrategy: PreloadAllModules })
+    SharedModule.forRoot(),   // importa o SharedModule + Providers
+    //CoreModule,             // CoreModule se torna obsoleto
+    RouterModule.forRoot(ROUTES, { preloadingStrategy: PreloadAllModules }) // PreloadAllModules, carregando em background
   ],
+  //quando alguém pedir a estratégia de localização, vamos usar outra classe, a HashLocationStrategy
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy },
   //ou seja, sempre que um componente, pedir o toker chamado 'LOCALE_ID',
   //ele vai receber o valor 'pt-BR' e começar a trabalhar nesse padrão
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy },
   { provide: LOCALE_ID, useValue: 'pt-BR' },
   { provide: ErrorHandler, useClass: AplicationErrorHandler }],
   bootstrap: [AppComponent]
